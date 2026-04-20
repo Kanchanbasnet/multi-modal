@@ -1,0 +1,20 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "paths": {
+      "@repo/types": ["../../packages/types/src"],
+      "@repo/validators": ["../../packages/validators/src"],
+      "@repo/logger": ["../../packages/logger/src"]
+    }
+  },
+   "references":[
+      {"path": "../../packages/types"},
+      {"path": "../../packages/validators"},
+      {"path": "../../packages/logger"}
+
+    ],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
