@@ -14,16 +14,17 @@
   "dependencies": {
     "@repo/types": "workspace:*",
     "@repo/validators": "workspace:*",
-    "@repo/logger": "workspace:*"
+    "@repo/logger": "workspace:*",
+    "@repo/config": "workspace:*"
   
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.0.0",
-    "eslint": "^9.39.1",
+    "@types/node": "22.8.2",
+    "eslint": "9.39.1",
     "tsx": "^4.7.0",
-    "typescript": "^5.4.0",
+    "typescript": "5.9.2",
     "typescript-eslint": "^8.50.0"
   }
 }
