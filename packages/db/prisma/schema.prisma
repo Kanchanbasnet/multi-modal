@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Plan {
+  FREE
+  PRO
+}
+
+enum AuthProvider {
+  GOOGLE
+  MAGIC_LINK
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String    @unique
+  avatarUrl String?
+
+  plan      Plan      @default(FREE)
+  openAiKey String?
+  isActive  Boolean   @default(true)
+  deletedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  authProviders  UserAuthProvider[]
+  sessions       Session[]
+  magicLinkTokens MagicLinkToken[]
+
+  @@index([plan])
+  @@map("users")
+}
+
+model UserAuthProvider {
+  id         String       @id @default(cuid())
+  userId     String
+  provider   AuthProvider
+  providerId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider])
+  @@index([userId])
+  @@map("user_auth_providers")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  expiresAt DateTime
+
+  ipAddress String?
+  userAgent String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model MagicLinkToken {
+  id        String   @id @default(cuid())
+  email     String
+  userId    String?
+  tokenHash String   @unique
+  expiresAt DateTime
+
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([email])
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("magic_link_tokens")
+}

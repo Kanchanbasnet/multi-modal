@@ -15,7 +15,8 @@
     "@repo/types": "workspace:*",
     "@repo/validators": "workspace:*",
     "@repo/logger": "workspace:*",
-    "@repo/config": "workspace:*"
+    "@repo/config": "workspace:*",
+    "@repo/database": "workspace:*"
    
   },
   "devDependencies": {

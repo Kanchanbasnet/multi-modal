@@ -8,14 +8,16 @@
       "@repo/types": ["../../packages/types/src"],
       "@repo/validators": ["../../packages/validators/src"],
       "@repo/logger": ["../../packages/logger/src"],
-      "@repo/config": ["../../packages/config/src"]
+      "@repo/config": ["../../packages/config/src"],
+      "@repo/database": ["../../packages/db/src"]
     }
   },
    "references":[
       {"path": "../../packages/types"},
       {"path": "../../packages/validators"},
       {"path": "../../packages/logger"},
-      {"path": "../../packages/config"}
+      {"path": "../../packages/config"},
+      {"path": "../../packages/db"}
 
     ],
   "include": ["src/**/*"],

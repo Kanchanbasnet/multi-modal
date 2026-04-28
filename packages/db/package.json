@@ -7,7 +7,6 @@
     "dev": "tsc -w",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
-
   },
   "exports": {
     ".": {
@@ -18,10 +17,18 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "22.8.2",
     "@types/eslint": "9.6.1",
+    "@types/node": "22.8.2",
+    "@types/pg": "^8.20.0",
+    "dotenv": "^17.4.2",
     "eslint": "9.39.1",
-     "typescript": "5.9.2",
+    "prisma": "^7.8.0",
+    "typescript": "5.9.2",
     "typescript-eslint": "^8.50.0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "pg": "^8.20.0"
   }
 }
