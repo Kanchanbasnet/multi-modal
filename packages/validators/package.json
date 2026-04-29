@@ -7,7 +7,6 @@
     "dev": "tsc -w",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
-
   },
   "exports": {
     ".": {
@@ -18,10 +17,13 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "22.8.2",
     "@types/eslint": "9.6.1",
+    "@types/node": "22.8.2",
     "eslint": "9.39.1",
-     "typescript": "5.9.2",
+    "typescript": "5.9.2",
     "typescript-eslint": "^8.50.0"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
   }
 }

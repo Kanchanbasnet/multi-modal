@@ -7,8 +7,8 @@ dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 // Lets define .env schema now
 
 const envSchema = z.object({
-  // NODE_ENV: z.enum(['development', 'production']).default('development'),
-  // PORT: z.coerce.number().default(3000),
+  NODE_ENV: z.enum(['development', 'production']).default('development'),
+  PORT: z.coerce.number().default(3000),
   DATABASE_URL: z.string().min(1, 'Database Url is required.'),
   // REDIS_URL: z.string().min(1, 'Redis Url is required.'),
   // JWT_SECRET: z.string().min(32, 'JWT secret is required.'),
@@ -69,12 +69,12 @@ export const dbConfig = {
 //   from: env.EMAIL_FROM,
 // } as const;
 
-// export const appConfig = {
-//   nodeEnv: env.NODE_ENV,
-//   port: env.PORT,
-//   frontendUrl: env.FRONTEND_URL,
-//   encryptionKey: env.ENCRYPTION_KEY,
-// } as const;
+export const appConfig = {
+  nodeEnv: env.NODE_ENV,
+  port: env.PORT,
+  // frontendUrl: env.FRONTEND_URL,
+  // encryptionKey: env.ENCRYPTION_KEY,
+} as const;
 
 // export const openaiConfig = {
 //   openaiApiKey: env.OPENAI_API_KEY,
