@@ -1,11 +1,12 @@
-import "@repo/config";
-import {prisma} from "@repo/database";
+import { createApp } from "./app";
+import { logger } from "@repo/logger";
 
 
-async function main (){
-    const users = await prisma.user.findMany();
-    console.log("users are:::", users);
-}
+const PORT = process.env['PORT'] ?? 3000;
 
+const app = createApp();
 
-main();
+app.listen(PORT, ()=>{
+    logger.info(`Server is running on port ${PORT}`)
+})
+

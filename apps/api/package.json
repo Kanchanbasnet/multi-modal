@@ -9,23 +9,23 @@
     "lint": "eslint src/ --max-warnings 0",
     "clean": "rm -rf dist",
     "check-types": "tsc --noEmit"
-
   },
   "dependencies": {
+    "@repo/config": "workspace:*",
+    "@repo/database": "workspace:*",
+    "@repo/logger": "workspace:*",
     "@repo/types": "workspace:*",
     "@repo/validators": "workspace:*",
-    "@repo/logger": "workspace:*",
-    "@repo/config": "workspace:*",
-    "@repo/database": "workspace:*"
-   
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/express": "^5.0.6",
     "@types/node": "22.8.2",
     "eslint": "9.39.1",
     "tsx": "^4.7.0",
-     "typescript": "5.9.2",
+    "typescript": "5.9.2",
     "typescript-eslint": "^8.50.0"
   }
 }
