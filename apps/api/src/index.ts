@@ -1,3 +1,4 @@
+import '@repo/config';
 import { createApp } from "./app";
 import { logger } from "@repo/logger";
 

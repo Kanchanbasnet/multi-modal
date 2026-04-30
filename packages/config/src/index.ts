@@ -10,6 +10,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
   PORT: z.coerce.number().default(3000),
   DATABASE_URL: z.string().min(1, 'Database Url is required.'),
+  BASE_URL: z.url()
   // REDIS_URL: z.string().min(1, 'Redis Url is required.'),
   // JWT_SECRET: z.string().min(32, 'JWT secret is required.'),
   // JWT_EXPIRES_IN: z.string().default('1d'),
@@ -72,6 +73,7 @@ export const dbConfig = {
 export const appConfig = {
   nodeEnv: env.NODE_ENV,
   port: env.PORT,
+  baseUrl: env.BASE_URL
   // frontendUrl: env.FRONTEND_URL,
   // encryptionKey: env.ENCRYPTION_KEY,
 } as const;
