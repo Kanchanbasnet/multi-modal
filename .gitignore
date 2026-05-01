@@ -26,6 +26,7 @@ coverage
 out/
 build
 dist
+*.tsbuildinfo
 
 # Prisma generated client
 packages/db/src/generated
