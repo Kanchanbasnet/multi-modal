@@ -9,7 +9,6 @@
     "lint": "eslint src/ --max-warnings 0",
     "clean": "rm -rf dist",
     "check-types": "tsc --noEmit"
-
   },
   "dependencies": {
     "@repo/types": "workspace:*",
@@ -17,8 +16,6 @@
     "@repo/logger": "workspace:*",
     "@repo/config": "workspace:*",
     "@repo/database": "workspace:*"
-
-  
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",

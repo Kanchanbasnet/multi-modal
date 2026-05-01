@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-   
+
     "paths": {
       "@repo/types": ["../../packages/types/src"],
       "@repo/validators": ["../../packages/validators/src"],
@@ -12,14 +12,13 @@
       "@repo/database": ["../../packages/db/src"]
     }
   },
-   "references":[
-      {"path": "../../packages/types"},
-      {"path": "../../packages/validators"},
-      {"path": "../../packages/logger"},
-      {"path": "../../packages/config"},
-      {"path": "../../packages/db"}
-
-    ],
+  "references": [
+    { "path": "../../packages/types" },
+    { "path": "../../packages/validators" },
+    { "path": "../../packages/logger" },
+    { "path": "../../packages/config" },
+    { "path": "../../packages/db" }
+  ],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

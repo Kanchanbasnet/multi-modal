@@ -9,9 +9,7 @@
     }
   },
 
-  "references": [
-    {"path": "../config"}
-  ],
+  "references": [{ "path": "../config" }],
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

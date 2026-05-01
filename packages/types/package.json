@@ -7,7 +7,6 @@
     "dev": "tsc -w",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
-
   },
   "exports": {
     ".": {
@@ -21,7 +20,7 @@
     "@types/node": "22.8.2",
     "@types/eslint": "9.6.1",
     "eslint": "9.39.1",
-     "typescript": "5.9.2",
+    "typescript": "5.9.2",
     "typescript-eslint": "^8.50.0"
   }
 }

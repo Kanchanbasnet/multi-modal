@@ -89,19 +89,17 @@ export const verifyMagicLink = async (
   return { token: rawSessionToken };
 };
 
-
 // Google Auth
-export const getGoogleAuthUrl = (): string=>{
+export const getGoogleAuthUrl = (): string => {
   const params = new URLSearchParams({
-    client_id : authConfig.googleAuth.clientId,
+    client_id: authConfig.googleAuth.clientId,
     redirect_uri: authConfig.googleAuth.callbackUrl,
     response_type: 'code',
     scope: 'openid email profile',
-    access_type: 'offline'
-  })
+    access_type: 'offline',
+  });
   return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-
-}
+};
 
 const exchangeCodeForAccessToken = async (code: string): Promise<string> => {
   const response = await fetch('https://oauth2.googleapis.com/token', {
@@ -116,7 +114,7 @@ const exchangeCodeForAccessToken = async (code: string): Promise<string> => {
     }),
   });
 
-  const data = await response.json() as { access_token: string };
+  const data = (await response.json()) as { access_token: string };
 
   if (!response.ok) {
     throw new Error('Failed to exchange code for access token');

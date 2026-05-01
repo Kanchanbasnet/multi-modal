@@ -14,9 +14,9 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "noImplicitReturns":true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames":true,
+    "forceConsistentCasingInFileNames": true,
     "exactOptionalPropertyTypes": true,
     "noPropertyAccessFromIndexSignature": true
   }

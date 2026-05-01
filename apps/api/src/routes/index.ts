@@ -7,6 +7,6 @@ const router: ExpressRouter = Router();
 
 router.use('/health', healthRouter);
 router.use('/users', userRouter);
-router.use('/auth', authRouter)
+router.use('/auth', authRouter);
 
 export default router;

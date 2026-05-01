@@ -43,8 +43,6 @@ export const googleCallback = async (req: Request, res: Response): Promise<void>
   res.redirect(`${appConfig.frontendUrl}?token=${result.token}`);
 };
 
-
-
 export const logout = async (req: Request, res: Response): Promise<void> => {
   const authHeader = req.headers['authorization'];
   const token = authHeader?.slice(7);
