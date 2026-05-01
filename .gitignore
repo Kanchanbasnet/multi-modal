@@ -30,6 +30,11 @@ dist
 # Prisma generated client
 packages/db/src/generated
 
+# Compiled files accidentally output to src/ instead of dist/
+packages/*/src/**/*.js
+packages/*/src/**/*.d.ts
+packages/*/src/**/*.d.ts.map
+
 
 # Debug
 npm-debug.log*
