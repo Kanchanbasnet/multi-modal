@@ -1,0 +1,12 @@
+node_modules
+.turbo
+.git
+.github
+*.tsbuildinfo
+**/*.tsbuildinfo
+**/dist
+README.md
+.env
+.env.*
+docker-compose.yml
+packages/db/src/generated
