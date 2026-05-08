@@ -26,7 +26,7 @@ const envSchema = z.object({
 
   // RESEND_API_KEY: z.string().min(1, 'Resend API key is required.'),
   // EMAIL_FROM: z.email(),
-  // OPENAI_API_KEY: z.string().startsWith('sk', 'OPENAI Key starts with sk.'),
+  OPENAI_API_KEY: z.string().startsWith('sk', 'OPENAI Key starts with sk.'),
 
   // ENCRYPTION_KEY: z.string().length(64, 'Encryption Key must be exactly 64 characters.'),
   // FREE_DAILY_LIMIT: z.coerce.number().default(5),
@@ -78,9 +78,9 @@ export const appConfig = {
   // encryptionKey: env.ENCRYPTION_KEY,
 } as const;
 
-// export const openaiConfig = {
-//   openaiApiKey: env.OPENAI_API_KEY,
-// } as const;
+export const openaiConfig = {
+  openaiApiKey: env.OPENAI_API_KEY,
+} as const;
 
 // export const rateLimit = {
 //   dailyLimit: env.FREE_DAILY_LIMIT,
