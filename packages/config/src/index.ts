@@ -27,6 +27,8 @@ const envSchema = z.object({
   // RESEND_API_KEY: z.string().min(1, 'Resend API key is required.'),
   // EMAIL_FROM: z.email(),
   OPENAI_API_KEY: z.string().startsWith('sk', 'OPENAI Key starts with sk.'),
+  SUPABASE_URL: z.string().min(1, 'Supabase Url is required.'),
+  SUPABASE_SERVICE_KEY: z.string().min(1, 'Supabase Service Key is required.'),
 
   // ENCRYPTION_KEY: z.string().length(64, 'Encryption Key must be exactly 64 characters.'),
   // FREE_DAILY_LIMIT: z.coerce.number().default(5),
@@ -48,6 +50,11 @@ export const env = parsed.data;
 
 export const dbConfig = {
   url: env.DATABASE_URL,
+} as const;
+
+export const supabaseConfig = {
+  supabaseurl: env.SUPABASE_URL,
+  supabaseServiceKey: env.SUPABASE_SERVICE_KEY,
 } as const;
 
 // export const redisConfig = {
