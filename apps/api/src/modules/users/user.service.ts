@@ -17,6 +17,25 @@ export const getUserById = async (userId: string) => {
   });
 };
 
+export const createUser = async (email: string, name: string) => {
+  return await prisma.user.create({
+    data: {
+      email,
+      name,
+    },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      avatarUrl: true,
+      plan: true,
+      isActive: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+};
+
 export const updateUserById = async (userId: string, data: UpdateUserInput) => {
   return await prisma.user.update({
     where: { id: userId },

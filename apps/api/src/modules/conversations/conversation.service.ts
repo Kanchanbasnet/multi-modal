@@ -67,3 +67,28 @@ export const archieveConversation = async (conversationId: string, userId: strin
     },
   });
 };
+
+// Messages
+
+export const saveMessage = async (
+  conversationId: string,
+  role: 'USER' | 'ASSISTANT',
+  content: string,
+) => {
+  return await prisma.message.create({
+    data: {
+      conversationId,
+      role,
+      content,
+      model: 'gpt-4o-mini',
+    },
+  });
+};
+
+export const getMessagesByConversationId = async (conversationId: string) => {
+  return await prisma.message.findMany({
+    where: { conversationId },
+    orderBy: { createdAt: 'asc' },
+    select: { role: true, content: true },
+  });
+};

@@ -6,7 +6,9 @@ const messageSchema = z.object({
 });
 
 export const chatCompletionSchema = z.object({
-  messages: z.array(messageSchema).min(1, 'At least one message is required.'),
+  conversationId: z.string().min(1, 'conversation id is required.'),
+  userId: z.string().min(1, 'user id is required.'),
+  message: z.string().min(1, 'Message cannot be empty.'),
   model: z.string().default('gpt-4o-mini'),
 });
 

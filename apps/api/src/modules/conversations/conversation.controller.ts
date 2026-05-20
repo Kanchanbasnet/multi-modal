@@ -2,7 +2,8 @@ import { type Request, type Response } from 'express';
 import * as conversationService from './conversation.service';
 
 export const newConversation = async (req: Request, res: Response) => {
-  const userId = req.user.id;
+  // const userId = req.user.id;
+  const { userId } = req.body;
   const conversation = await conversationService.newConversation(userId);
   res
     .status(200)
@@ -73,5 +74,15 @@ export const getALLArchiveConversation = async (req: Request, res: Response) => 
     success: true,
     message: 'Archived Conversation retrieved Successfully.',
     data: conversation,
+  });
+};
+
+export const getMessagesByConversationId = async (req: Request, res: Response) => {
+  const { conversationId } = req.params;
+  const messages = await conversationService.getMessagesByConversationId(conversationId as string);
+  res.status(200).json({
+    success: true,
+    message: 'Messages retrieved Successfully.',
+    data: messages,
   });
 };
