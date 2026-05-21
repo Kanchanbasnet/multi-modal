@@ -2,8 +2,7 @@ import { type Request, type Response } from 'express';
 import * as conversationService from './conversation.service';
 
 export const newConversation = async (req: Request, res: Response) => {
-  // const userId = req.user.id;
-  const { userId } = req.body;
+  const userId = req.user.id;
   const conversation = await conversationService.newConversation(userId);
   res
     .status(200)
@@ -22,7 +21,7 @@ export const getAllUserConversation = async (req: Request, res: Response) => {
 
 export const getConversationById = async (req: Request, res: Response) => {
   const { conversationId } = req.params;
-  const { userId } = req.body;
+  const userId = req.user.id;
   const conversation = await conversationService.getConversationById(
     conversationId as string,
     userId,
@@ -79,6 +78,15 @@ export const getALLArchiveConversation = async (req: Request, res: Response) => 
 
 export const getMessagesByConversationId = async (req: Request, res: Response) => {
   const { conversationId } = req.params;
+  const userId = req.user.id;
+  const conversation = await conversationService.getConversationById(
+    conversationId as string,
+    userId,
+  );
+  if (!conversation) {
+    res.status(404).json({ success: false, message: 'Conversation not found.' });
+    return;
+  }
   const messages = await conversationService.getMessagesByConversationId(conversationId as string);
   res.status(200).json({
     success: true,

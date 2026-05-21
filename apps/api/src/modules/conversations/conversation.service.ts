@@ -74,13 +74,20 @@ export const saveMessage = async (
   conversationId: string,
   role: 'USER' | 'ASSISTANT',
   content: string,
+  model?: string,
+  prompt_tokens?: number,
+  completion_tokens?: number,
+  total_tokens?: number,
 ) => {
   return await prisma.message.create({
     data: {
       conversationId,
       role,
       content,
-      model: 'gpt-4o-mini',
+      ...(model !== undefined && { model }),
+      ...(prompt_tokens !== undefined && { promptTokens: prompt_tokens }),
+      ...(completion_tokens !== undefined && { completionToken: completion_tokens }),
+      ...(total_tokens !== undefined && { totalTokens: total_tokens }),
     },
   });
 };

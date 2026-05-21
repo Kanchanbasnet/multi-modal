@@ -10,5 +10,5 @@ export const getChat = async (req: Request, res: Response) => {
     return;
   }
 
-  await chatService.getChat(parsed.data, res);
+  await chatService.getChat(parsed.data, req.user.id, res);
 };

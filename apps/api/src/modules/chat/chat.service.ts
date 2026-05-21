@@ -1,11 +1,13 @@
 import { OpenAI } from 'openai';
 import { openaiConfig } from '@repo/config';
+import { logger } from '@repo/logger';
 import { type ChatCompletionInput } from '@repo/validators';
 import type { ChatCompletionMessageParam } from 'openai/resources';
 
 import { type Response } from 'express';
 import { closeSSeEvent, initSSE, sendSSEevent } from '../../utils/sse';
 import {
+  getConversationById,
   getMessagesByConversationId,
   linkFileToMessage,
   saveMessage,
@@ -30,14 +32,21 @@ const generateAndSetTitle = async (conversationId: string, firstMessage: string)
     const title = response.choices[0]?.message?.content?.trim() ?? firstMessage.slice(0, 60);
     await setTitle(conversationId, title);
   } catch (error) {
-    console.error('Error has been occured.', error);
+    logger.error({ error }, 'Failed to generate conversation title');
   }
 };
 
-export async function getChat(input: ChatCompletionInput, res: Response) {
+export async function getChat(input: ChatCompletionInput, userId: string, res: Response) {
   initSSE(res);
 
   try {
+    const conversation = await getConversationById(input.conversationId, userId);
+    if (!conversation) {
+      sendSSEevent(res, 'error', 'Conversation not found.');
+      res.end();
+      return;
+    }
+
     const existingMessage = await getMessagesByConversationId(input.conversationId);
     const isFirstMessage = existingMessage.length === 0;
     const userMessage = await saveMessage(input.conversationId, 'USER', input.message);
@@ -79,7 +88,7 @@ export async function getChat(input: ChatCompletionInput, res: Response) {
           role: 'user' as const,
           content: [
             { type: 'text' as const, text: history.content },
-            { type: 'text' as const, text: `Document content:\n${audio.extractedText}` },
+            { type: 'text' as const, text: `Audio transcript:\n${audio.extractedText}` },
           ],
         };
       }
@@ -91,10 +100,12 @@ export async function getChat(input: ChatCompletionInput, res: Response) {
       model: input.model,
       messages: chatHistory,
       stream: true,
+      stream_options: { include_usage: true },
     });
-    console.log('ChatHistory:::', chatHistory);
 
     let fullResponse = '';
+    let usage: { prompt_tokens: number; completion_tokens: number; total_tokens: number } | null =
+      null;
 
     for await (const chunk of stream) {
       const text = chunk.choices[0]?.delta?.content ?? '';
@@ -102,8 +113,19 @@ export async function getChat(input: ChatCompletionInput, res: Response) {
         fullResponse += text;
         sendSSEevent(res, 'chunk', text);
       }
+      if (chunk.usage) {
+        usage = chunk.usage;
+      }
     }
-    await saveMessage(input.conversationId, 'ASSISTANT', fullResponse);
+    await saveMessage(
+      input.conversationId,
+      'ASSISTANT',
+      fullResponse,
+      input.model,
+      usage?.prompt_tokens,
+      usage?.completion_tokens,
+      usage?.total_tokens,
+    );
 
     closeSSeEvent(res);
   } catch (error) {
