@@ -27,6 +27,7 @@ const envSchema = z.object({
   // RESEND_API_KEY: z.string().min(1, 'Resend API key is required.'),
   // EMAIL_FROM: z.email(),
   OPENAI_API_KEY: z.string().startsWith('sk', 'OPENAI Key starts with sk.'),
+  GROQ_API_KEY: z.string(),
   SUPABASE_URL: z.string().min(1, 'Supabase Url is required.'),
   SUPABASE_SERVICE_KEY: z.string().min(1, 'Supabase Service Key is required.'),
 
@@ -87,6 +88,10 @@ export const appConfig = {
 
 export const openaiConfig = {
   openaiApiKey: env.OPENAI_API_KEY,
+} as const;
+
+export const grokaiConfig = {
+  grokaiApikey: env.GROQ_API_KEY,
 } as const;
 
 // export const rateLimit = {

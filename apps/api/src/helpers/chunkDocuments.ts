@@ -1,5 +1,22 @@
 import mammoth from 'mammoth';
+import { toFile } from 'openai';
 import { PDFParse } from 'pdf-parse';
+import { grokaiConfig } from '@repo/config';
+
+import Groq from 'groq-sdk';
+
+const groq = new Groq({ apiKey: grokaiConfig.grokaiApikey });
+
+export const transcribeAudio = async (file: Express.Multer.File): Promise<string> => {
+  const audioFile = await toFile(file.buffer, file.originalname, { type: file.mimetype });
+
+  const transcription = await groq.audio.transcriptions.create({
+    file: audioFile,
+    model: 'whisper-large-v3',
+  });
+
+  return transcription.text;
+};
 
 export const extractText = async (
   mimeType: string,

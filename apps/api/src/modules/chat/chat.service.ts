@@ -30,6 +30,7 @@ export async function getChat(input: ChatCompletionInput, res: Response) {
       const role = history.role.toLowerCase() as 'user' | 'assistant' | 'system';
       const image = history.files.find((f) => f.fileType === 'IMAGE');
       const document = history.files.find((f) => f.fileType === 'DOCUMENT');
+      const audio = history.files.find((f) => f.fileType === 'AUDIO');
 
       if (role === 'user' && image) {
         return {
@@ -47,6 +48,15 @@ export async function getChat(input: ChatCompletionInput, res: Response) {
           content: [
             { type: 'text' as const, text: history.content },
             { type: 'text' as const, text: `Document content:\n${document.extractedText}` },
+          ],
+        };
+      }
+      if (role === 'user' && audio && audio.extractedText) {
+        return {
+          role: 'user' as const,
+          content: [
+            { type: 'text' as const, text: history.content },
+            { type: 'text' as const, text: `Document content:\n${audio.extractedText}` },
           ],
         };
       }

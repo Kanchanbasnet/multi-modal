@@ -2,7 +2,7 @@ import { supabaseConfig } from '@repo/config';
 import { createClient } from '@supabase/supabase-js';
 import { prisma } from '@repo/database';
 import { type FileType } from '@repo/database';
-import { extractText } from '../../helpers/chunkDocuments';
+import { extractText, transcribeAudio } from '../../helpers/chunkDocuments';
 const supabase = createClient(supabaseConfig.supabaseurl, supabaseConfig.supabaseServiceKey);
 
 export const uploadFile = async (
@@ -19,9 +19,13 @@ export const uploadFile = async (
   if (error) throw new Error(`Upload failed: ${error.message}`);
 
   const { data } = supabase.storage.from('chat-files').getPublicUrl(fileName);
-
-  const extractedText =
-    fileType === 'DOCUMENT' ? await extractText(file.mimetype, data.publicUrl, file) : null;
+  let extractedText: string | null = null;
+  if (fileType === 'DOCUMENT') {
+    extractedText = await extractText(file.mimetype, data.publicUrl, file);
+  }
+  if (fileType === 'AUDIO') {
+    extractedText = await transcribeAudio(file);
+  }
 
   const saved = await prisma.file.create({
     data: {
