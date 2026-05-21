@@ -89,6 +89,25 @@ export const getMessagesByConversationId = async (conversationId: string) => {
   return await prisma.message.findMany({
     where: { conversationId },
     orderBy: { createdAt: 'asc' },
-    select: { role: true, content: true },
+    select: {
+      role: true,
+      content: true,
+      files: {
+        select: {
+          url: true,
+          fileType: true,
+          extractedText: true,
+        },
+      },
+    },
+  });
+};
+
+export const linkFileToMessage = async (messageId: string, fileId: string) => {
+  return await prisma.file.update({
+    where: { id: fileId },
+    data: {
+      messageId,
+    },
   });
 };

@@ -179,6 +179,7 @@ model File {
   name            String
   size            Int?
   mimeType        String?
+  extractedText   String?       @db.Text
 
 
   createdAt       DateTime       @default(now())

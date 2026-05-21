@@ -14,8 +14,9 @@ const router: ExpressRouter = Router();
 router.get('/', getAllUserConversation);
 router.get('/archieveConversation', getALLArchiveConversation);
 router.get('/:conversationId', getConversationById);
-router.post('/new', newConversation);
 router.get('/:conversationId/messages', getMessagesByConversationId);
+
+router.post('/new', newConversation);
 
 router.patch('/:conversationId/archieve', archieveConversation);
 router.delete('/:conversationId', deleteConversation);
