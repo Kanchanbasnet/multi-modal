@@ -9,18 +9,41 @@ import {
   getMessagesByConversationId,
   linkFileToMessage,
   saveMessage,
+  setTitle,
 } from '../conversations/conversation.service';
 
 const openai = new OpenAI({
   apiKey: openaiConfig.openaiApiKey,
 });
 
+const generateAndSetTitle = async (conversationId: string, firstMessage: string) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        {
+          role: 'user',
+          content: `Generate a short conversation title (maximum 6 words, no quotes) for a chat that starts with this message: "${firstMessage}"`,
+        },
+      ],
+    });
+    const title = response.choices[0]?.message?.content?.trim() ?? firstMessage.slice(0, 60);
+    await setTitle(conversationId, title);
+  } catch (error) {
+    console.error('Error has been occured.', error);
+  }
+};
+
 export async function getChat(input: ChatCompletionInput, res: Response) {
   initSSE(res);
 
   try {
+    const existingMessage = await getMessagesByConversationId(input.conversationId);
+    const isFirstMessage = existingMessage.length === 0;
     const userMessage = await saveMessage(input.conversationId, 'USER', input.message);
-
+    if (isFirstMessage) {
+      generateAndSetTitle(input.conversationId, input.message);
+    }
     if (input.fileId) {
       await linkFileToMessage(userMessage.id, input.fileId);
     }

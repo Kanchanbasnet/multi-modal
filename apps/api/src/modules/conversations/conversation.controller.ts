@@ -22,7 +22,7 @@ export const getAllUserConversation = async (req: Request, res: Response) => {
 
 export const getConversationById = async (req: Request, res: Response) => {
   const { conversationId } = req.params;
-  const userId = req.user.id;
+  const { userId } = req.body;
   const conversation = await conversationService.getConversationById(
     conversationId as string,
     userId,

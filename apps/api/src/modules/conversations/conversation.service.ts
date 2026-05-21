@@ -111,3 +111,12 @@ export const linkFileToMessage = async (messageId: string, fileId: string) => {
     },
   });
 };
+
+export const setTitle = async (conversationId: string, title: string) => {
+  await prisma.conversation.update({
+    where: { id: conversationId },
+    data: {
+      title,
+    },
+  });
+};
