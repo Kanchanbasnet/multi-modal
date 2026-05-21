@@ -14,6 +14,8 @@ const MIME_TO_FILE_TYPE: Record<string, FileType> = {
   'audio/mpeg': 'AUDIO',
   'audio/wav': 'AUDIO',
   'audio/mp4': 'AUDIO',
+  'audio/webm': 'AUDIO',
+  'audio/ogg': 'AUDIO',
 };
 
 export const uploadFile = async (req: Request, res: Response) => {
@@ -47,6 +49,7 @@ export const uploadFile = async (req: Request, res: Response) => {
         url: uploaded.url,
         fileType: uploaded.fileType,
         name: uploaded.name,
+        extractedText: uploaded.extractedText ?? null,
       },
     });
   } catch (error) {

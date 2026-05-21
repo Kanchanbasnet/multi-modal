@@ -23,7 +23,7 @@ export const verifyMagicLink = async (req: Request, res: Response): Promise<void
     return;
   }
 
-  res.status(200).json({ success: true, token: result.token });
+  res.redirect(`${appConfig.frontendUrl}?token=${result.token}`);
 };
 
 export const googleAuth = (_req: Request, res: Response): void => {
