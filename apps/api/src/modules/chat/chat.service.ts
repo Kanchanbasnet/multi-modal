@@ -130,6 +130,7 @@ export async function getChat(input: ChatCompletionInput, userId: string, res: R
     closeSSeEvent(res);
   } catch (error) {
     sendSSEevent(res, 'error', 'Something went wrong');
+    logger.error({ error }, 'Something went wrong');
     res.end();
   }
 }
