@@ -22,8 +22,15 @@ export const verifyMagicLink = async (req: Request, res: Response): Promise<void
     res.status(401).json({ success: false, message: 'Invalid or expired token' });
     return;
   }
+  res.cookie('session', result.token, {
+    httpOnly: true,
+    secure: appConfig.nodeEnv === 'production',
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: '/',
+  });
 
-  res.redirect(`${appConfig.frontendUrl}?token=${result.token}`);
+  res.redirect(`${appConfig.frontendUrl}`);
 };
 
 export const googleAuth = (_req: Request, res: Response): void => {
@@ -40,13 +47,30 @@ export const googleCallback = async (req: Request, res: Response): Promise<void>
   }
 
   const result = await authService.handleGoogleCallback(code, req.ip, req.get('user-agent'));
-  res.redirect(`${appConfig.frontendUrl}?token=${result.token}`);
+  res.cookie('session', result.token, {
+    httpOnly: true,
+    secure: appConfig.nodeEnv === 'production',
+    sameSite: 'lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: '/',
+  });
+  res.redirect(`${appConfig.frontendUrl}`);
 };
 
 export const logout = async (req: Request, res: Response): Promise<void> => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader?.slice(7);
-  const tokenHash = authService.hashToken(token!);
+  const token = req.cookies['session'];
+  const tokenHash = authService.hashToken(token);
   await authService.logout(tokenHash);
+  res.clearCookie('session', {
+    httpOnly: true,
+    secure: appConfig.nodeEnv === 'production',
+    sameSite: 'lax',
+    path: '/',
+  });
+
   res.status(200).json({ success: true, message: `Logged out successfully.` });
+};
+
+export const getMe = (req: Request, res: Response): void => {
+  res.status(200).json({ success: true, user: req.user });
 };

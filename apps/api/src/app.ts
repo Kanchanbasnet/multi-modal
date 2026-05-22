@@ -4,6 +4,7 @@ import cors from 'cors';
 import { requestLogger } from './middleware/requestLogger';
 import { errorHandler } from './middleware/errorHandler';
 import router from './routes';
+import cookieParser from 'cookie-parser';
 
 export const createApp = (): Application => {
   const app = express();
@@ -19,6 +20,7 @@ export const createApp = (): Application => {
   );
 
   app.use(express.json());
+  app.use(cookieParser());
   app.use(requestLogger);
   app.use('/api', router);
 

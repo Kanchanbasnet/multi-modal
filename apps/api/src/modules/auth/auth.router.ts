@@ -2,6 +2,7 @@ import { Router, type Router as ExpressRouter } from 'express';
 import { validate } from '../../middleware/validate';
 import { requestMagicLinkSchema } from '@repo/validators';
 import {
+  getMe,
   googleAuth,
   googleCallback,
   logout,
@@ -15,6 +16,7 @@ const router: ExpressRouter = Router();
 router.post('/magic-link/request', validate(requestMagicLinkSchema), requestMagicLink);
 router.get('/magic-link/verify', verifyMagicLink);
 router.post('/logout', authenticate, logout);
+router.get('/me', authenticate, getMe);
 
 router.get('/google', googleAuth);
 router.get('/google/callback', googleCallback);

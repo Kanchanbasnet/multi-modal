@@ -174,7 +174,7 @@ model File {
   conversationId  String
   messageId       String?
   fileType        FileType
-  FileStatus      FileStatus    @default(PENDING)
+  fileStatus      FileStatus    @default(PENDING)
   url             String
   name            String
   size            Int?
