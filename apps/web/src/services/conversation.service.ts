@@ -7,7 +7,7 @@ export const getUserConversations = async () => {
 };
 
 export const newConversation = async () => {
-  const response = await api.post(`/conversations`);
+  const response = await api.post(`/conversations/new`);
   return response.data;
 };
 

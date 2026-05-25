@@ -60,6 +60,13 @@ export interface AuthState {
   isAuthenticated: boolean;
 }
 
+export interface ConversationState {
+  list: Conversation[];
+  activeId: string | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
 export type ApiResponse<T> =
   | {
       success: true;

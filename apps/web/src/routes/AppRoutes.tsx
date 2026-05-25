@@ -4,6 +4,7 @@ import { useAppDispatch } from '../store/hooks';
 import { fetchCurrentUser } from '../store/thunks/authThunks';
 import ProtectedRoute from './ProtectedRoutes';
 import LoginPage from '../pages/LoginPage';
+import ChatPage from '../pages/ChatPage';
 
 export default function AppRoutes() {
   const dispatch = useAppDispatch();
@@ -19,7 +20,15 @@ export default function AppRoutes() {
         path="/"
         element={
           <ProtectedRoute>
-            <div className="p-8">Logged in! Chat coming soon.</div>
+            <ChatPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chat/:conversationId"
+        element={
+          <ProtectedRoute>
+            <ChatPage />
           </ProtectedRoute>
         }
       />
