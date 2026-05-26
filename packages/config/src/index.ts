@@ -24,8 +24,8 @@ const envSchema = z.object({
 
   // //Email
 
-  // RESEND_API_KEY: z.string().min(1, 'Resend API key is required.'),
-  // EMAIL_FROM: z.email(),
+  RESEND_API_KEY: z.string().min(1, 'Resend API key is required.'),
+  EMAIL_FROM: z.email(),
   OPENAI_API_KEY: z.string().startsWith('sk', 'OPENAI Key starts with sk.'),
   GROQ_API_KEY: z.string(),
   SUPABASE_URL: z.string().min(1, 'Supabase Url is required.'),
@@ -73,10 +73,10 @@ export const authConfig = {
   },
 } as const;
 
-// export const emailConfig = {
-//   apiKey: env.RESEND_API_KEY,
-//   from: env.EMAIL_FROM,
-// } as const;
+export const emailConfig = {
+  apiKey: env.RESEND_API_KEY,
+  from: env.EMAIL_FROM,
+} as const;
 
 export const appConfig = {
   nodeEnv: env.NODE_ENV,

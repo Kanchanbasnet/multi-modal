@@ -4,6 +4,9 @@ import { logger } from '@repo/logger';
 import { type VerifyMagicLinkInput, type RequestMagicLinkInput } from '@repo/validators';
 
 import crypto from 'crypto';
+import { sendEmail } from '../email/sendEmail';
+import { magicLinkTemplate } from '../email/templates/magicLink.template';
+import { successLoginTemplate } from '../email/templates/loginSuccess.template';
 const MAGIC_LINK_EXPIRY_MINUTES = 20;
 
 export const hashToken = (token: string): string => {
@@ -38,7 +41,7 @@ export const requestMagicLink = async (data: RequestMagicLinkInput, baseUrl: str
   });
 
   const magicLink = `${baseUrl}/api/auth/magic-link/verify?token=${rawToken}`;
-  logger.info({ magicLink }, `Magic Link Generated`);
+  await sendEmail(email, 'MultiModal Authentication', magicLinkTemplate(email, magicLink));
   return {
     message: 'Magic Link Sent. Check Your Email!',
   };
@@ -85,6 +88,7 @@ export const verifyMagicLink = async (
       ...(userAgent !== undefined && { userAgent }),
     },
   });
+  await sendEmail(magicToken.email, 'Sign Up Successful', successLoginTemplate(magicToken.email));
 
   return { token: rawSessionToken };
 };
@@ -203,6 +207,7 @@ export const handleGoogleCallback = async (
       ...(userAgent !== undefined && { userAgent }),
     },
   });
+  await sendEmail(googleUser.email, 'Sign Up Successful', successLoginTemplate(googleUser.email));
 
   return { token: rawSessionToken };
 };
