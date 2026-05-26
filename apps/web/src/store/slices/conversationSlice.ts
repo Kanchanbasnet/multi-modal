@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { ConversationState } from '../../types';
 import {
+  archiveConversation,
   deleteConversations,
   fetchConversations,
   newConversations,
@@ -46,6 +47,10 @@ const conversationSlice = createSlice({
       .addCase(newConversations.rejected, (state) => {
         state.isLoading = false;
         state.error = 'Failed to create new conversation!';
+      })
+      .addCase(archiveConversation.fulfilled, (state, action) => {
+        state.list = state.list.filter((c) => c.id !== action.payload);
+        if (state.activeId === action.payload) state.activeId = null;
       })
       .addCase(deleteConversations.fulfilled, (state, action) => {
         state.list = state.list.filter((c) => c.id !== action.payload);

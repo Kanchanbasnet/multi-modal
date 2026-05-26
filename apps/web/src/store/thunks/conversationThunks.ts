@@ -17,3 +17,11 @@ export const deleteConversations = createAsyncThunk('conversation/delete', async
   await deleteConversation(id);
   return id;
 });
+
+export const archiveConversation = createAsyncThunk(
+  'conversation/archive',
+  async (conversationId: string) => {
+    await archiveConversation(conversationId);
+    return conversationId;
+  },
+);

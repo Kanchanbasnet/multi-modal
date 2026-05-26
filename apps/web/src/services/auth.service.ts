@@ -7,8 +7,8 @@ export const requestMagicLink = async (email: string) => {
 };
 
 export const getMe = async () => {
-  const response = await api.get<User>('/auth/me');
-  return response.data;
+  const response = await api.get<{ success: boolean; user: User }>('/auth/me');
+  return response.data.user;
 };
 
 export const logout = async () => {
